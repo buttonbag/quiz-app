@@ -48,15 +48,37 @@ startGame = () => {
 };
 
 getNewQuestion = () => {
+
+    if (availableQuestions.length == 0 || questionCounter >= MAX_QUESTIONS) {
+        // go to end page
+        return window.location.assign("/end.html");
+    }
+
     questionCounter++;
     const questionIndex = Math.floor(Math.random() * availableQuestions.length);
-    currentQuestion = availableQuestions[questionIndex];
-    question.innerText = currentQuestion.question;
+    currentQuestion = availableQuestions[questionIndex]; /* availableQuestions comes from the SPREAD of objects in the array called questions in the startGame function */
+    question.innerText = currentQuestion.question; /* displays the object called question => into the DOM element called question */
     
     choices.forEach( choice => {
         const number = choice.dataset['number'];
         choice.innerText = currentQuestion["choice" + number];
     });
+
+    availableQuestions.splice(questionIndex, 1); /* removes the questions already asked via splice */
+
+    acceptingAnswers = true;
 };
+
+choices.forEach(choice => {
+    choice.addEventListener("click", e => {
+        if(!acceptingAnswers) return; /* ignore if not yet accepting answers */
+
+        acceptingAnswers = false;
+        const selectedChoice = e.target;
+        const selectedAnswer = selectedChoice.dataset["number"];
+        console.log(selectedAnswer);
+        getNewQuestion();
+    });
+});
 
 startGame();
