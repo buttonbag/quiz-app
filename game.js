@@ -1,7 +1,8 @@
 const question = document.getElementById('question');
 const choices = Array.from(document.getElementsByClassName('choice-text'));
-const questionCounterText = document.getElementById('questionCounter');
+const progressText = document.getElementById('progressText');
 const scoreText = document.getElementById('score');
+const progressBarFull = document.getElementById('progressBarFull');
 
 let currentQuestion = {};
 let acceptingAnswers = true;
@@ -57,7 +58,9 @@ getNewQuestion = () => {
     }
 
     questionCounter++;
-    questionCounterText.innerText = `${questionCounter}/${MAX_QUESTIONS}`;
+    progressText.innerText = `Question ${questionCounter}/${MAX_QUESTIONS}`;
+    // update progress bar percentage
+    progressBarFull.style.width = `${(questionCounter/MAX_QUESTIONS)*100}%`;
 
     const questionIndex = Math.floor(Math.random() * availableQuestions.length);
     currentQuestion = availableQuestions[questionIndex]; /* availableQuestions comes from the SPREAD of objects in the array called questions in the startGame function */
@@ -81,6 +84,13 @@ choices.forEach(choice => {
         const selectedChoice = e.target;
         const selectedAnswer = selectedChoice.dataset["number"];
 
+        /* 
+        
+        I found that because I didn't use the ternary method for the classToApply statement, I was able to take advantage of that to add incrementScore(CORRECT_BONUS) to keep the code DRY.
+
+        **Is that the wrong way to do it? I prefer my method but I'm still learning so I'm not sure.**
+        
+        */
         let classToApply = 'incorrect';
             if (selectedAnswer == currentQuestion.answer) {
                 classToApply = 'correct';
