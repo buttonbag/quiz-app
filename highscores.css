@@ -1,0 +1,23 @@
+
+#highScoresList {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 4rem;
+    width: 30rem;
+  }
+  
+  .high-score {
+    text-transform: capitalize;
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
+  .high-score:hover {
+    transform: scale(1.025);
+  }
+
+  .score {
+    font-weight: 700;;
+  }
