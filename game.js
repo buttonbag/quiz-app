@@ -46,13 +46,14 @@ startGame = () => {
     questionCounter = 0;
     score = 0;
     availableQuestions = [...questions];
-    console.log(availableQuestions);
+    // console.log(availableQuestions);
     getNewQuestion();
 };
 
 getNewQuestion = () => {
 
     if (availableQuestions.length == 0 || questionCounter >= MAX_QUESTIONS) {
+        localStorage.setItem("mostRecentScore", score);
         // go to end page
         return window.location.assign("/end.html");
     }
